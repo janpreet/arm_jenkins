@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 MAINTAINER Janpreet Singh <janpreetsinghgill@gmail.com>
 
-RUN apt-get update && apt-get install -y wget git
+RUN apt-get update && apt-get install -y wget git curl
 
 RUN apt-get install -y openjdk-11-jre-headless && \
     apt-get clean
@@ -20,3 +20,9 @@ RUN mkdir -p /opt/jenkins && \
         wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war
 
 CMD java -jar /opt/jenkins/jenkins.war --prefix=$PREFIX
+
+RUN mkdir -p /var/jenkins_home/user_scripts
+
+COPY --chown=jenkins run_tests.sh /var/jenkins_home/user_scripts/run_tests.sh
+
+USER jenkins
