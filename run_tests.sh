@@ -1,11 +1,10 @@
 #!/bin/bash
 
-success=200
-test=`curl -sL -w "%{http_code}" "localhost:8081" -o /dev/null`
+ps -p 1 -o command | grep jenkins > /dev/null
 
-if [ $test == $success ]
+if [ $? -eq 0 ]
 then
   echo "Jenkins is up and running."
 else
-  echo "Test failed."
+  echo "Test has failed."
 fi
